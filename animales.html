@@ -1,0 +1,79 @@
+
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <title></title>
+  </head>
+  <body>
+    <nav class="navbar navbar-light bg-dark">
+        <a class="navbar-brand text-white" href="#">Pets</a>
+      </nav>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-1">
+              </div>
+            <div class="col-md-10">
+              <h1>Pet List</h1>
+              <table class="table">
+                <thead class="thead-dark">
+                  <th>Name</th>
+                  <th>Picture</th>
+                  <th>Especies</th>
+                  <th>Price</th>
+                  <th>Food</th>
+                </thead>
+                <tbody id="contenido_tabla">
+
+                </tbody>
+              </table>
+            </div>
+            <div class="col-md-1">
+            </div>
+
+        </div>
+    </div>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-git.min.js"></script>
+    <script type="text/javascript" src="https://requirejs.org/docs/release/2.3.6/minified/require.js">
+    </script>
+    <script type="text/javascript">
+      const url = 'https://raw.githubusercontent.com/velascoandrs/mascotas/master/pets.json';
+      function cargar_datos(){
+          $.get(
+            url,
+            (datos)=>{
+              if (datos){
+                let data = JSON.parse(datos);
+                console.log(data.pets)
+                renderizar_tabla(data.pets);
+              }else {
+                console.log("Error");
+              }
+
+            }
+          )
+      }
+
+      function renderizar_tabla(animales){
+        let contenido_tabla = $('#contenido_tabla')
+        animales.forEach(
+          (animal)=>{
+          let html = `<tr>
+                          <td>${animal.name}</td>
+                          <td><image src=${animal.picture} width="64" height="64"/></td>
+                          <td>${animal.species}</td>
+                          <td>${animal.price}</td>
+                          <td>${'Likes:' +animal.foods['likes'] +'<br>'+ 'Dislikes: '+ animal.foods['likes']}
+                          </td>
+                      </tr>`;
+          contenido_tabla.append(html);
+        })
+      }
+      cargar_datos();
+    </script>
+  </body>
+</html>
